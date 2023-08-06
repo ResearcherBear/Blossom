@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en">
+      <head>
+           <title>
+             Blossom vB.1
+           </title>
+           <link rel="icon" type="image/x-icon" href="https://cdn3.iconfinder.com/data/icons/cat-pattern-colored/94/cat3-1024.png">
+
+      </head>
+
+        <body style="background-color:rgb(258, 189, 192); font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+          <header>
+            <h1 style="background-color:rgb(245, 184, 240); width:300px; padding:10px; border:5px solid rgb(248, 56, 190); margin: 20px; ">  Blossom :</h1>
+          </header>
+          <br>
+      <div>
+      
+          <div style="background-color:rgb(245, 184, 240); width:300px; padding:10px; border:5px solid rgb(248, 56, 190); margin: 20px; float: left;" >
+          <p>  So, How was your day?</p>
+          <label><input type="radio" name="day" value="happy">  It was great</label>
+          <label><input type="radio" name="day" value="sad"> Kinda bad</label>
+
+          <label><input type="radio" name="day" value="neutral" >Uk alright</label>
+          <button style="background-color:rgb(245, 163, 217) ;" onclick="getDayResponse()">Next</button>
+          <p id="dayResponse"></p>
+          </div>
+          
+          <div style="text-align: justify;">
+            
+            <img src="https://tse2.mm.bing.net/th?id=OIP.pjQIO6KcSxjmJLEYTYIbGAHaEt&pid=Api&P=0&h=180" style="width:300px;height:180px; padding-left: 150px; padding-top: 180x; ">
+          </div>
+          <div style="text-align: center;">
+          <a href="https://www.boredpanda.com/heart-warming-cat-pics/?utm_source=in.search.yahoo&utm_medium=referral&utm_campaign=organic">
+            If You Feel Sad </a>
+          </div>
+
+        </div>
+        
+          
+          <div style="background-color:rgb(245, 184, 240); width:300px; padding:10px; border:5px solid rgb(248, 56, 190); margin: 20px; " >
+          <p>How are you feeling today?</p>
+          <form id="moodForm">
+          <label><input type="radio" name="mood" value="happy"> Happy</label>
+          <label><input type="radio" name="mood" value="neutral"> Same as alwyas </label>
+          <label><input type="radio" name="mood" value="sad"> Kinda Bad </label>  
+          <input style="background-color:rgb(245, 163, 217) ;" type="submit" value="Next">
+          </form>
+          </div>
+        
+          <div style="background-color:rgb(245, 184, 240); width:300px; padding:10px; border:5px solid rgb(248, 56, 190); margin: 20px; text-align: justify; position: absolute; top: 0px; right: 0px; " >
+            <h2>Your Mood History:</h2>
+            <p id="moodHistory">
+            </p>
+          </div>
+
+
+        <script>
+            function getDayResponse() {
+                var selectedDay = document.querySelector('input[name="day"]:checked').value;
+        
+                if (selectedDay === "happy") {
+                    response = "That's fantastic! Keep up the good vibes!";
+                } else if (selectedDay === "sad") {
+                    response = "I'm sorry to hear that. I hope things get better soon.";
+                } else if (selectedDay === "neutral") {
+                    response = "Well, ups and downs are a part of life. Tomorrow is a new day!";
+                }
+                document.getElementById("dayResponse").innerHTML = response;
+            }
+        </script>
+        <script>
+            const moodForm = document.getElementById("moodForm");
+            const moodHistoryList = document.getElementById("moodHistory");
+            const moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || [];
+            function renderMoodHistory() {
+              moodHistoryList.innerHTML = "";
+              moodHistory.forEach((entry) => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `Date: ${entry.date}, Mood: ${entry.mood}`;
+                moodHistoryList.appendChild(listItem);
+              });
+            }
+            moodForm.addEventListener("submit", function (event) {
+              event.preventDefault();
+              const selectedMood = document.querySelector('input[name="mood"]:checked');
+              if (selectedMood) {
+                const moodEntry = {
+                  date: new Date().toLocaleDateString(),
+                  mood: selectedMood.value,
+                };
+        
+                moodHistory.push(moodEntry);
+        
+                localStorage.setItem("moodHistory", JSON.stringify(moodHistory));
+                renderMoodHistory();
+              }
+            });
+            renderMoodHistory();
+          </script>
+        
+        </body>
+        </html>
